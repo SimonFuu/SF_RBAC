@@ -1,0 +1,174 @@
+html, body {
+    height: 100%;
+    background: #f1f2f7;
+}
+
+.form-help-block {
+    margin-bottom: 0;
+}
+
+th > label {
+    margin-bottom: 0 !important;
+}
+
+td > label {
+    margin-bottom: 0 !important;
+}
+
+
+@media screen and (max-width:1240px) {
+    .error-content > p {
+        text-align: center;
+        font-size: 18px;
+    }
+}
+
+.error-content {
+    padding-top: 10px;
+}
+
+.login-padding-15, .init-password-padding-15 {
+    padding: 15px !important;
+}
+
+.login-box, .init-password-box {
+    margin: auto;
+    margin-top: 10%;
+    width: 360px;
+    height: 384px;
+}
+
+.login-logo, .init-password-logo {
+    padding: 15px;
+    text-align: center;
+}
+
+.login-form, .init-password-form {
+    margin-top: 20px;
+    background: #fff;
+    border: 2px solid rgb(223,223,223);
+}
+
+.login-form > form > header, .init-password-form > form > header {
+    margin: 0;
+    background: #F5F5F5;
+    background-color: rgba(0, 0, 0, 0);
+    background: -webkit-linear-gradient(top, #fff 1%, #f9f9f9 98%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    background: linear-gradient(to bottom, #fff 1%, #f9f9f9 98%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    border-bottom: rgba(0,0,0,0.07) 1px solid;
+    padding: 15px 20px !important;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.login-form-filed, .init-password-form-filed {
+    padding: 15px;
+}
+
+.login-form-filed > .form-group, .init-password-form-filed > .form-group {
+    margin: 0;
+}
+
+.login-remember-me {
+    margin-top: 7px !important;
+}
+
+.login-form > form > footer, .init-password-form > form > footer {
+    height: 30px;
+    padding: 15px 15px 25px;
+}
+
+.login-footers, .init-password-footers {
+    margin-top: -30px;
+}
+
+.login-forget-password {
+    height: 34px;
+    line-height: 34px;
+}
+
+.content-iframe {
+    width: 100%;
+}
+
+.parent-window-content-wapper > .content{
+    padding: 0 !important;
+}
+
+.iframe-content-warpper {
+    margin-left: 0 !important;
+}
+
+.alert-area {
+    padding: 15px;
+    padding-bottom: 0;
+}
+
+.search-header {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    padding: 10px;
+}
+
+.actions-list, .actions-list > thead > tr > th{
+    text-align: center;
+}
+
+.role-actions-list, .user-roles-list {
+    max-height: 375px;
+    overflow: auto;
+    margin-right: 0;
+}
+
+.has-error > .col-sm-10 > .role-actions-list, .has-error > .col-sm-10 > .user-roles-list {
+    border: 1px solid #dd4b39;
+}
+
+.has-error > .col-sm-10 > .role-actions-list > .col-sm-3 > table,
+.has-error > .col-sm-10 > .user-roles-list > .col-sm-3 > table {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.has-error > .col-sm-10 > .role-actions-list > .col-sm-3 > table > tbody > tr > td > label,
+.has-error > .col-sm-10 > .user-roles-list > .col-sm-3 > table > tbody > tr > td > label{
+    color: #333 !important;
+}
+
+.actions-list-urls {
+    max-height: 100px;
+    overflow: auto;
+}
+
+.child-role-action-label {
+    font-weight: 100;
+    margin-left: 15px;
+}
+
+.set-actions-icons-list {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.set-actions-icons-list > thead > tr > td {
+    padding-bottom: 10px;
+    min-width: 38px;
+}
+.set-actions-icons-list > tbody > tr > td {
+    min-width: 38px;
+}
+
+.set-actions-icon-label {
+    width: 100%;
+    font-weight: normal;
+}
+
+.set-action-icon, .set-actions-icon-button {
+    width: 38px;
+    text-align: center;
+    max-width: 38px;
+}
