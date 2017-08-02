@@ -2,13 +2,6 @@
 @section('body')
     <!-- Main content -->
     <section class="content">
-        <div class="alert alert-info alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert"
-                    aria-hidden="true">
-                &times;
-            </button>
-            <i class="icon fa fa-warning"></i>本页面仅管理后台管理员用户！如需添加业务用户，请到 <a href="#"><strong>人员管理</strong></a>！
-        </div>
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">用户列表</h3>

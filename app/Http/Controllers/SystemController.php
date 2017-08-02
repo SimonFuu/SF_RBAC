@@ -305,6 +305,7 @@ class SystemController extends Controller
                     $query -> where('isAdmin', $request -> isAdmin);
                 }
             })
+            -> where('isDelete', 0)
             -> paginate(self::PER_PAGE_RECORD_COUNT);
         return view('system.users.list', ['users' => $users, 'sCondition' => $this -> searchCondition]);
     }
@@ -313,11 +314,25 @@ class SystemController extends Controller
     {
         $user = null;
         if ($request -> has('id')) {
-//            $userItem = DB::table('system_users')
-//                -> select('system_users.id', 'system_users.username', 'system_users.name', 'system_users.gender',
-//                    'system_users.telephone', 'system_users.officeTel',
-//                    DB::raw('CONCAT("' . env('APP_FILE_SERVER') . '", lvs_system_users.avatar) as avatar'),
-//                    'system_users.birthday','system_users.birthday');
+            $userItem = DB::table('system_users')
+                -> select('system_users.id', 'system_users.username', 'system_users.name', 'system_users.gender',
+                    'system_users_roles.rid', 'system_users.isAdmin')
+                -> leftJoin('system_users_roles', 'system_users_roles.uid', '=', 'system_users.id')
+                -> where('system_users.id', $request -> id)
+                -> where('system_users.isDelete', 0)
+                -> where('system_users_roles.isDelete', 0)
+                -> get();
+            if ($userItem) {
+                $user = (object)[];
+                foreach ($userItem as $key => $item) {
+                    $user -> id = $item -> id;
+                    $user -> username = $item -> username;
+                    $user -> name = $item -> name;
+                    $user -> gender = $item -> gender;
+                    $user -> isAdmin = $item -> isAdmin;
+                    $user -> rid[$item -> rid] = true;
+                }
+            }
         }
         $roles = DB::table('system_roles')
             -> select('id', 'roleName')
@@ -331,9 +346,10 @@ class SystemController extends Controller
         $rules = [
             'username' => 'required|max:30|unique:system_users,username,'
                 . ($request -> has('id') ? $request -> id : 'NULL') . ',id,isDelete,0',
-            'password' => 'required_without:id|max:255|min:6|confirmed',
+            'password' => 'required_without:id|confirmed|max:255' . ($request -> password == '' ? '' : '|min:6'),
             'name' => 'required|max:30',
             'gender' => 'required|boolean',
+            'isAdmin' => 'required|boolean',
             'roles' => 'required|array'
         ];
         $message = [
@@ -346,8 +362,10 @@ class SystemController extends Controller
             'password.confirmed' => '两次输入的密码不一致，请重新输入！',
             'name.required' => '请输入姓名！',
             'name.max' => '姓名长度最大为30！',
-            'gender.max' => '请选择用户性别！',
+            'gender.required' => '请选择用户性别！',
             'gender.boolean' => '性别格式不正确！',
+            'isAdmin.required' => '请选择是否是管理员！',
+            'isAdmin.boolean' => '用户身份格式不正确！',
             'roles.required' => '请选择用户角色！',
             'roles.array' => '用户角色格式不正确，请联系管理员！',
         ];
@@ -363,22 +381,19 @@ class SystemController extends Controller
     {
         $req = $request -> except(['_token', 'roles', 'password_confirmation']);
         $req['password'] = bcrypt($req['password']);
-        dd($req);
         $userRoles = [];
         DB::beginTransaction();
         try {
-            $uid = DB::table('system_users')
-                -> insertGetId($req);
+            $uid = DB::table('system_users') -> insertGetId($req);
             foreach ($request -> roles as $role) {
                 $userRoles[] = [
                     'uid' => $uid,
                     'rid' => $role
                 ];
             }
-            DB::table('system_users_roles')
-                -> insert($userRoles);
+            DB::table('system_users_roles') -> insert($userRoles);
             DB::commit();
-            return redirect('/system/users/list') -> with('success', '添加后台角色成功');
+            return redirect('/system/users/list') -> with('success', '添加后台用户成功！');
         } catch (\Exception $e) {
             DB::rollback();
             return redirect('/system/users/list') -> with('error', '添加后台失败：' . $e -> getMessage());
@@ -387,6 +402,53 @@ class SystemController extends Controller
 
     private function updateExistUser(Request $request)
     {
+        $req = $request -> except(['_token', 'roles', 'password_confirmation', 'id', 'username']);
+        if ($request -> password !== '') {
+            $req['password'] = bcrypt($req['password']);
+        } else {
+            unset($req['password']);
+        }
+        $userRoles = [];
+        DB::beginTransaction();
+        try {
+            DB::table('system_users') -> where('id', $request -> id) -> update($req);
+            foreach ($request -> roles as $role) {
+                $userRoles[] = [
+                    'uid' => $request -> id,
+                    'rid' => $role
+                ];
+            }
+            DB::table('system_users_roles') -> where('uid', $request -> id) -> update(['isDelete' => 1]);
+            DB::table('system_users_roles') -> insert($userRoles);
+            DB::commit();
+            return redirect('/system/users/list') -> with('success', '修改后台用户成功！');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect('/system/users/list') -> with('error', '修改后台失败：' . $e -> getMessage());
+        }
+    }
 
+    public function deleteUser(Request $request)
+    {
+        if (!$request -> has('id')) {
+            return redirect('/system/users/list') -> with('error', '请提供用户ID');
+        }
+        if ($request -> id == 1) {
+            return redirect('/system/users/list') -> with('error', '无法删除超级管理员用户！');
+        }
+        DB::beginTransaction();
+        try {
+            DB::table('system_users')
+                -> where('id', $request -> id)
+                -> update(['isDelete' => 1]);
+            DB::table('system_users_roles')
+                -> where('uid', $request -> id)
+                -> update(['isDelete' => 1]);
+            DB::commit();
+            return redirect('/system/users/list') -> with('success', '用户删除成功！');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect('/system/users/list') -> with('error', '用户删除失败：' . $e -> getMessage());
+        }
     }
 }

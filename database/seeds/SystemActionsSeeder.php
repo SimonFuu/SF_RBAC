@@ -35,21 +35,21 @@ class SystemActionsSeeder extends Seeder
                 'description' => '添加、修改、删除系统用户',
                 'menuUrl' => 'system/users/list',
                 'urls' => '["system\/users\/list","system\/users\/add","system\/users\/edit","system\/users\/store","system\/users\/delete"]',
-                'parentId' => 1
+                'parentId' => 2
             ],
             [
                 'actionName' => '角色管理',
                 'description' => '添加、修改、删除后台管理员角色',
                 'menuUrl' => 'system/roles/list',
                 'urls' => '["system\/roles\/list","system\/roles\/add","system\/roles\/edit","system\/roles\/store","system\/roles\/delete"]',
-                'parentId' => 1
+                'parentId' => 2
             ],
             [
                 'actionName' => '菜单权限管理',
                 'description' => '添加、修改、删除当前系统的所有权限',
                 'menuUrl' => 'system/actions/list',
                 'urls' => '["system\/actions\/list","system\/actions\/add","system\/actions\/edit","system\/actions\/store","system\/actions\/delete"]',
-                'parentId' => 1
+                'parentId' => 2
             ],
         ];
         DB::beginTransaction();

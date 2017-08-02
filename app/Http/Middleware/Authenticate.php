@@ -10,8 +10,8 @@ class Authenticate
 {
     protected $except = [
         'index',
-//        'panel/init/password',
-        'notify'
+        'notify',
+        'panel/init/password',
     ];
 
     /**

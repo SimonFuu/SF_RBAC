@@ -44,7 +44,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::group(['prefix' => 'users'], function () {
             Route::get('/list', 'SystemController@usersList');
             Route::get('/add', 'SystemController@setUsers');
+            Route::get('/edit', 'SystemController@setUsers');
             Route::post('/store', 'SystemController@storeUser');
+            Route::get('/delete', 'SystemController@deleteUser');
         });
     });
 

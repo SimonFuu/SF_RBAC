@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 2 | Starter</title>
+    <title>{{ env('APP_NAME') }}</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -166,6 +166,7 @@
                                 <p>
                                     {{ Auth() -> user() -> name }}
                                     <small>Member since {{ date("D, d M Y", strtotime(Auth() -> user() -> addTime)) }}</small>
+                                    <small>Last login ip:{{ Auth() -> user() -> lastLoginIp }}. Login times:{{ Auth() -> user() -> loginTimes }} </small>
                                 </p>
                             </li>
                             <!-- Menu Footer-->
