@@ -18,9 +18,16 @@
         <link rel="stylesheet" href="/assets/plugins/Ionicons/css/ionicons.min.css">
         <link rel="stylesheet" href="/assets/plugins/AdminLte/css/AdminLTE.min.css">
         <link rel="stylesheet" href="/assets/plugins/AdminLte/css/skin-blue.min.css">
+
+        <link rel="stylesheet" href="/assets/plugins/bootstrap-fileinput-4.4.2/css/fileinput.css" media="all">
+
         <link rel="stylesheet" href="/assets/css/layouts.css?v={{ date('YmdHi') }}">
         <script src="/assets/plugins/jquery-3.2.1/jquery-3.2.1.min.js"></script>
         <script src="/assets/plugins/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+
+        <script src="/assets/plugins/bootstrap-fileinput-4.4.2/js/fileinput.js"></script>
+
+        <script src="/assets/plugins/bootstrap-fileinput-4.4.2/js/plugins/sortable.js"></script>
     @else
         <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -114,6 +121,25 @@
 </div>
 <!-- /.set-actions-modal -->
 
+<!-- set-actions-modal -->
+<div class="modal fade" id="updateMyAvatarModal" tabindex="-1" role="dialog" aria-labelledby="updateMyAvatarModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="updateMyAvatarModalLabel">修改头像</h4>
+            </div>
+            <div class="modal-body upload-my-avatar">
+                {{--TODO 修改上传头像功能为表单提交的形式！不使用异步提交--}}
+                <input id="avatar" name="avatar" accept="image/*" type="file">
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.set-actions-modal -->
 <!-- /.Modals -->
 
 @if(env('APP_ENV') === 'local')

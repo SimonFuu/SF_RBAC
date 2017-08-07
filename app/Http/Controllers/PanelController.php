@@ -33,8 +33,13 @@ class PanelController extends Controller
         return redirect('/login') -> with('success', '密码修改成功，请重新登录！');
     }
 
-    public function getPersonalInfo(Request $request)
+    public function userCenter()
     {
-
+        $userInfo = DB::table('system_users')
+            -> select('id', 'username', 'name', 'gender', 'email', 'telephone', 'avatar')
+            -> where('isDelete', 0)
+            -> where('id', Auth::user() -> id)
+            -> first();
+        return view('panel.user', ['userProfile' => $userInfo]);
     }
 }

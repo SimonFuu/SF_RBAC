@@ -89,6 +89,23 @@ td > label {
     line-height: 34px;
 }
 
+.user-profile-table > tbody > tr > td, .user-profile-table > tbody > tr > th{
+    height: 75px;
+    line-height: 75px;
+}
+
+.user-profile-avatar {
+    border: 1px solid rgb(237,239,245);
+    margin-left: 50px;
+    width: 165px;
+    padding: 3px;
+    text-align: center;
+    border-radius: 5px;
+    background: #ffffff;
+}
+.user-profile-input {
+    margin-top: 20px;
+}
 .content-iframe {
     width: 100%;
 }

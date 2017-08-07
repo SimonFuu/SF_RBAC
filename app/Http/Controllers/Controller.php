@@ -18,6 +18,12 @@ class Controller extends BaseController
 
     public function getRoleActionsInfo($roleId = 0)
     {
+        $basePermissions = [
+            'index',
+            'notify',
+            'panel/init/password',
+            'panel/user/center'
+        ];
         $permissions = [];
         $m = [];
         $menus = [];
@@ -52,10 +58,17 @@ class Controller extends BaseController
             }
         }
         if ($rawActions) {
+            foreach ($basePermissions as $permission) {
+                $permissions[$permission] = 1;
+            }
             foreach ($rawActions as $rawAction) {
                 $urls = json_decode($rawAction -> urls, true);
                 # 获取权限
-                $permissions = array_merge($permissions, $urls);
+                if ($urls) {
+                    foreach ($urls as $url) {
+                        $permissions[$url] = 1;
+                    }
+                }
                 if ($rawAction -> parentId == 0) {
                     $m[] = [
                         'id' => $rawAction -> id,
@@ -74,12 +87,17 @@ class Controller extends BaseController
                 }
             }
             // 生成菜单列表（二维数组）
+            $existMenuIds = [];
             foreach ($m as $key => $menu) {
-                $menus[$key] = $menu;
-                if (isset($cMenus[$menu['id']])) {
-                    $menus[$key]['childrenMenus'] = $cMenus[$menu['id']];
+                if (!isset($existMenuIds[$menu['id']])) {
+                    $existMenuIds[$menu['id']] = 1;
+                    $menus[$key] = $menu;
+                    if (isset($cMenus[$menu['id']])) {
+                        $menus[$key]['childrenMenus'] = $cMenus[$menu['id']];
+                    }
                 }
             }
+            unset($existMenuIds);
         }
         return ['permissions' => $permissions, 'menus' => $menus];
     }

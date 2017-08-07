@@ -166,7 +166,7 @@
                                 <p>
                                     {{ Auth() -> user() -> name }}
                                     <small>Member since {{ date("D, d M Y", strtotime(Auth() -> user() -> addTime)) }}</small>
-                                    <small>Last login ip:{{ Auth() -> user() -> lastLoginIp }}. Login times:{{ Auth() -> user() -> loginTimes }} </small>
+                                    <small>Last login ip: <strong>{{ Auth() -> user() -> lastLoginIp }}</strong>. Login times: <strong>{{ Auth() -> user() -> loginTimes }}</strong></small>
                                 </p>
                             </li>
                             <!-- Menu Footer-->

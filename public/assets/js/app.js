@@ -195,6 +195,22 @@ var selectActionIcon = function (e) {
     }
 };
 
+
+
+var uploadFiles = function () {
+
+    $('.btn-file').on('click', function () {
+        if ($(this).hasClass('disabled')) {
+            return false;
+        } else {
+            $(this).addClass('disabled');
+            setTimeout(function () {
+                $('.btn-file').removeClass('disabled');
+            }, 1200);
+        }
+    });
+};
+
 var searchIconsArray =  function(str, container) {
     var nPos;
     var vResult = [];
@@ -210,6 +226,7 @@ var searchIconsArray =  function(str, container) {
 };
 
 $(document).ready(function () {
+    uploadFiles();
     resizeIFrame();
     sidebarClick();
     setActionIcons();

@@ -56,7 +56,7 @@ class LoginController extends Controller
 
     public function loginCheck(Request $request)
     {
-        if (Auth::attempt(['username' => $request -> username, 'password' => $request -> password])) {
+        if (Auth::attempt(['username' => $request -> username, 'password' => $request -> password, 'isDelete' => 0])) {
             if (Auth::user() -> isActive == 0) {
                 return redirect('/panel/init/password');
             }

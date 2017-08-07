@@ -17,6 +17,7 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
+        if (!env('APP_INSTALLED')) {return redirect('/install.php');}
         if (Auth::guard($guard)->check()) {
             return redirect('/index');
         }

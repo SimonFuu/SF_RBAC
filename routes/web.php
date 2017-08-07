@@ -53,7 +53,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'panel'], function () {
         Route::get('/init/password', 'PanelController@initPassword');
         Route::post('/init/password', 'PanelController@storeInitPassword');
-
+        Route::get('/user/center', 'PanelController@userCenter');
     });
 });
 
