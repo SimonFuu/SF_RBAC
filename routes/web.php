@@ -54,6 +54,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/init/password', 'PanelController@initPassword');
         Route::post('/init/password', 'PanelController@storeInitPassword');
         Route::get('/user/center', 'PanelController@userCenter');
+        Route::get('/user/edit', 'PanelController@editProfile');
+        Route::post('/user/store', 'PanelController@storeUserProfile');
     });
+
+    Route::post('/upload/file', 'UploadController@storeFile');
 });
 

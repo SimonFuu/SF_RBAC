@@ -42,4 +42,64 @@ class PanelController extends Controller
             -> first();
         return view('panel.user', ['userProfile' => $userInfo]);
     }
+
+    public function editProfile()
+    {
+        $userInfo = DB::table('system_users')
+            -> select('id', 'username', 'name', 'gender', 'email', 'telephone', 'avatar')
+            -> where('isDelete', 0)
+            -> where('id', Auth::user() -> id)
+            -> first();
+        return view('panel.set', ['userProfile' => $userInfo]);
+    }
+
+    public function storeUserProfile(Request $request)
+    {
+        $rules = [
+            'name' => 'required|max:255',
+            'password' => 'confirmed|max:255' . ($request -> password == '' ? '' : '|min:6'),
+            'telephone' => 'required|unique:system_users,telephone,'. Auth::user() -> id . ',id,isDelete,0|digits_between:11,11',
+            'email' => 'required|unique:system_users,email,'. Auth::user() -> id . ',id,isDelete,0',
+            'gender' => 'required|boolean',
+            'file' => 'image|max:1500'
+        ];
+        $message = [
+            'name.required' => '请输入姓名！',
+            'name.max' => '姓名长度最大为255！',
+            'password.confirmed' => '两次输入的密码不一致！',
+            'password.max' => '密码长度最大为255位！',
+            'password.min' => '密码长度最低为6位！',
+            'telephone.required' => '请输入电话号码',
+            'telephone.digits_between' => '请输入11位长度手机号！',
+            'telephone.unique' => '该手机号已经存在',
+            'email.required' => '请输入邮件地址！',
+            'email.email' => '邮件格式不正确！',
+            'email.unique' => '该邮件地址已经存在，请确认！',
+            'gender.required' => '请选择用户性别',
+            'gender.boolean' => '用户性别格式不正确！',
+            'file.image' => '请上传图片类型文件！',
+            'file.max' => '头像文件最大为1500k',
+        ];
+        $this -> validate($request, $rules, $message);
+        $avatar = null;
+        $request -> type = 'avatar';
+        if ($request -> file('file')) {
+            $uploader = new UploadController();
+            $avatar = $uploader -> storeFile($request);
+        }
+        $req['name'] = $request -> name;
+        $req['gender'] = $request -> gender;
+        $req['telephone'] = $request -> telephone;
+        $req['email'] = $request -> email;
+        $req['gender'] = $request -> gender;
+        if ($request -> password) {
+            $req['password'] = bcrypt($request -> password);
+        }
+        if ($avatar) {
+            $req['avatar'] = $avatar;
+        }
+
+        DB::table('system_users') -> where('id', Auth::user() -> id) -> update($req);
+        return redirect('/panel/user/center?id=' . Auth::user() -> id) -> with('success', '修改信息成功，请刷新页面获取新的头像');
+    }
 }

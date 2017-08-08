@@ -22,7 +22,9 @@ class Controller extends BaseController
             'index',
             'notify',
             'panel/init/password',
-            'panel/user/center'
+            'panel/user/center',
+            'panel/user/edit',
+            'panel/user/store'
         ];
         $permissions = [];
         $m = [];

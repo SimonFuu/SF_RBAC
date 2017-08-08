@@ -403,7 +403,7 @@ class SystemController extends Controller
     private function updateExistUser(Request $request)
     {
         $req = $request -> except(['_token', 'roles', 'password_confirmation', 'id', 'username']);
-        if ($request -> password !== '') {
+        if ($request -> password) {
             $req['password'] = bcrypt($req['password']);
         } else {
             unset($req['password']);

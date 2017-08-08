@@ -120,26 +120,6 @@
     </div>
 </div>
 <!-- /.set-actions-modal -->
-
-<!-- set-actions-modal -->
-<div class="modal fade" id="updateMyAvatarModal" tabindex="-1" role="dialog" aria-labelledby="updateMyAvatarModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="updateMyAvatarModalLabel">修改头像</h4>
-            </div>
-            <div class="modal-body upload-my-avatar">
-                {{--TODO 修改上传头像功能为表单提交的形式！不使用异步提交--}}
-                <input id="avatar" name="avatar" accept="image/*" type="file">
-            </div>
-            <div class="modal-footer">
-
-            </div>
-        </div>
-    </div>
-</div>
-<!-- /.set-actions-modal -->
 <!-- /.Modals -->
 
 @if(env('APP_ENV') === 'local')

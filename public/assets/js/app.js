@@ -2,38 +2,6 @@
  * Created by simon on 17/07/2017.
  */
 
-var resizeIFrame = function () {
-    var contentWapper = $('.parent-window-content-wapper');
-    var height = contentWapper.height();
-    contentWapper.children('.content').children('iframe').css('height', height - 5);
-    $(window).resize(function () {
-        height = contentWapper.height();
-        contentWapper.children('.content').children('iframe').css('height', height - 5);
-    });
-};
-
-var sidebarClick = function () {
-    $('.sidebar-menu-item').on('click', function () {
-        $(this).siblings('li').each(function (index, element) {
-            $(element).removeClass('active');
-            if ($(element).hasClass('treeview')) {
-                $(element).children('.treeview-menu').css('display', 'none');
-            }
-        });
-        if (!$(this).hasClass('active')) {
-            $(this).addClass('active')
-        }
-    });
-
-    $('.treeview-menu > li').on('click', function () {
-        $(this).siblings('li').each(function (index, element) {
-            $(element).removeClass('active');
-        });
-        if (!$(this).hasClass('active')) {
-            $(this).addClass('active')
-        }
-    });
-};
 
 var roleActionsCheckboxRelate = function () {
     $('.parentRoleAction').on('click', function () {
@@ -195,19 +163,23 @@ var selectActionIcon = function (e) {
     }
 };
 
-
-
 var uploadFiles = function () {
-
-    $('.btn-file').on('click', function () {
-        if ($(this).hasClass('disabled')) {
-            return false;
-        } else {
-            $(this).addClass('disabled');
-            setTimeout(function () {
-                $('.btn-file').removeClass('disabled');
-            }, 1200);
-        }
+    var avatarImg = $(".kv-avatar").data('avatar');
+    $("#avatar").fileinput({
+        overwriteInitial: true,
+        maxFileSize: 1500,
+        showClose: false,
+        showCaption: false,
+        showBrowse: false,
+        browseOnZoneClick: true,
+        removeLabel: '',
+        removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
+        removeTitle: 'Cancel or reset changes',
+        elErrorContainer: '#kv-avatar-errors-2',
+        msgErrorClass: 'alert alert-block alert-danger',
+        defaultPreviewContent: '<img src="'+avatarImg+'" alt="Your Avatar" width="160"><h6 class="text-muted">Click to select</h6><h6>(Select file < 1500k)</h6>',
+        layoutTemplates: {main2: '{preview} {remove} {browse}'},
+        allowedFileExtensions: ["jpg", "png", "gif"]
     });
 };
 
@@ -227,8 +199,6 @@ var searchIconsArray =  function(str, container) {
 
 $(document).ready(function () {
     uploadFiles();
-    resizeIFrame();
-    sidebarClick();
     setActionIcons();
     roleActionsCheckboxRelate();
 });

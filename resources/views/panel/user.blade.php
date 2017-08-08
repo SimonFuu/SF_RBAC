@@ -5,6 +5,9 @@
         <div class="box box-info">
             <div class="box-header with-border">
                 <h3 class="box-title">个人中心</h3>
+                <div class="box-tools">
+                    <a href="/panel/user/edit" class="btn btn-primary btn-sm">编辑</a>
+                </div>
             </div>
             <!-- /.box-header -->
             <div class="box-body no-padding">
@@ -18,7 +21,6 @@
                             <td rowspan="3">
                                 <div class="user-profile-avatar">
                                     <img src="{{ env('APP_FILE_SERVER_URL') . $userProfile -> avatar}}" alt="头像" width="160" height="160">
-                                    <button type="button" class="btn btn-default btn-sm upload-files" data-toggle="modal" data-target="#updateMyAvatarModal">修改头像</button>
                                 </div>
                             </td>
                         </tr>
@@ -34,7 +36,7 @@
                             <th class="text-center">性别：</th>
                             <td class="text-center">
                                 <span class="user-profile-filed">
-                                    {{ $userProfile -> gender === 0 ? '男' : '女' }}
+                                    {{ $userProfile -> gender == 0 ? '男' : '女' }}
                                 </span>
                             </td>
                         </tr>
