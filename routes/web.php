@@ -17,6 +17,7 @@ Route::get('/', function () {
 Route::get('notify', function () {
     return view('notify');
 });
+Route::get('/install/db', 'InstallController@installDB');
 Route::get('/login', 'Auth\\LoginController@showLoginForm');
 Route::post('/login', 'Auth\\LoginController@loginCheck');
 Route::get('/logout', 'Auth\\LoginController@logout');

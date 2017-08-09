@@ -25,7 +25,7 @@
     <div class="login-box">
         <div class="login-logo">
             {{--<img src="" alt="">--}}
-            Logo
+            <h3>{{ env('APP_NAME') }}</h3>
         </div>
         <div class="login-form">
         {!! Form::open(['url' => '/login', 'method' => 'POST', 'class' => 'form-horizontal', 'role' => 'form']) !!}
@@ -39,7 +39,7 @@
                                     aria-hidden="true">
                                 &times;
                             </button>
-                            {{ session('success') }}
+                            {!! session('success') !!}
                         </div>
                     </div>
                 @endif
@@ -69,11 +69,11 @@
                         </span>
                     @endif
                 </div>
-                <div class="form-group login-remember-me">
-                    <label>
-                        <input type="checkbox"> 记住我
-                    </label>
-                </div>
+                {{--<div class="form-group login-remember-me">--}}
+                    {{--<label>--}}
+                        {{--<input type="checkbox"> 记住我--}}
+                    {{--</label>--}}
+                {{--</div>--}}
                 <hr>
             </div>
             <footer>
@@ -86,10 +86,5 @@
         </div>
     </div>
 </div>
-@if(env('APP_ENV') === 'local')
-    <script src="/assets/js/app.js?v={{ date('YmdHi') }}"></script>
-@else
-    <script src="/assets/js/app.js?v={{ env('APP_ASSETS_VERSION') }}"></script>
-@endif
 </body>
 </html>
